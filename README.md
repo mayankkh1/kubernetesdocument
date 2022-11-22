@@ -526,7 +526,19 @@ To deploy and manage clusters, we need to install kubectl, the official command 
    ```
 - Jenkins runs on Tomcat, which uses port 8080 as the default. -p 5000:5000 required to attach slave servers; port 50000 is used to communicate between     master and slaves that's why we have created two services.
 
--   
+- Now we have to run both the file with apply commands as like below:
+
+  ```kubectl apply -f jenkins.yaml```
+  ```kubectl apply -f jenkins-service.yaml```
+
+- After that we need to check pods and services are running fine related to jenkins with commands as like previously we have checked for application pods   and services.
+
+- Once it successfully run now run the jenkins with the URL as like below:
+
+  MinikubeIP:30000
+  
+- After that install Jenkins in b  
+  
 
 
  
