@@ -557,7 +557,11 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   We’ll click the Install suggested plugins option if we want otherwise cancel the same and add plugins according to requirement like ssh for               authentication of manage nodes, which will immediately begin the installation process.  
 
-- When the installation is complete, you’ll be prompted to set up the first administrative user. It’s possible to skip this step and continue as admin     using the initial password we used admin password only
+- When the installation is complete, you’ll be prompted to set up the first administrative user. It’s possible to skip this step and continue as admin     using the initial password, So we can skip this step and now jenkin installtion is successfully completed.
+
+- Once you got access to jenkin, first change the password of admin through manage credentials.
+
+
 
   
   
