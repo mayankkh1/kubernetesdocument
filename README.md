@@ -147,21 +147,84 @@ To deploy and manage clusters, we need to install kubectl, the official command 
     selector:
       matchLabels:
         app: nodemyapp01
-  template:
-    metadata:
-      labels:
-        app: nodemyapp01
-    spec:
-      containers:
-        - name:  nodeapp
-          image: mak1993/nodeapp01:latest
-          ports:
-            - containerPort: 3000
-          env:
-            - name: MONGO_URL
-              value: mongodb://mongo:27017/dev
-          imagePullPolicy: Always
+    template:
+      metadata:
+        labels:
+          app: nodemyapp01
+      spec:
+        containers:
+          - name:  nodeapp
+            image: mak1993/nodeapp01:latest
+            ports:
+              - containerPort: 3000
+            env:
+              - name: MONGO_URL
+                value: mongodb://mongo:27017/dev
+            imagePullPolicy: Always
      ```     
+     
+- Now we need to create database file for deployment. In this we need to create PVC first then create the deployment file
+  
+  Create the PersistentVolumeClaim as like below:
+  
+  ```
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: mongo-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 256Mi
+  ```
+  Once PVC file create now create the deployment file as like below:
+
+  ```
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: mongo
+  spec:
+    selector:
+      matchLabels:
+        app: mongo
+    template:
+      metadata:
+        labels:
+          app: mongo
+      spec:
+        containers:
+          - name: mongo
+            image: mongo:3.6.17-xenial
+            ports:
+              - containerPort: 27017
+            volumeMounts:
+              - name: storage
+                mountPath: /data/db
+        volumes:
+          - name: storage
+            persistentVolumeClaim:
+              claimName: mongo-pvc
+  ```
+  
+- Once all files are created, Put the files in any folder(in my case I have uploaded in kube folder).
+
+- Now run the below command kubectl apply for checking the deployment files are working fine or not.
+
+  ```kubectl apply -f kube```
+  
+- After that check the pods are visible or not after running the above command.
+
+  ```kubectl get pods```
+              
+- Once you get the pods running then your deployments files are working fine.
+
+
+
+
+
           
 
   
