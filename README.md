@@ -411,8 +411,45 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
   ```
   
-
+- Kustomize is a configuration management solution that leverages layering to preserve the base settings of your applications and components by             overlaying declarative yaml artifacts (called patches) that selectively override default settings without actually changing the original files.
   
+- Now we have to work on outside the kube directory for override the existing application files. It's not changed the original files.
+
+- For this we have to create the the kustomization file firt as like below with the name of kustomization.yaml
+ 
+  ```
+  apiVersion: kustomize.config.k8s.io/v1beta1
+  kind: Kustomization
+
+  bases:
+  - ./kube/
+
+  patchesStrategicMerge:
+    - replicas-patch.yml
+  
+  ```
+- After that we can create replicas-patch.yml for override the existing content.
+ 
+  ```
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: nodeapp
+  spec:
+    replicas: 2
+    
+  Now it will create the 2 application pod previously it creates 1.
+  
+- For run the kustomization we have to run the below command outside the kube directory as like below:
+
+  ```kubectl apply -k . ```
+  
+- Once command successfully run you got the 2 application pod in running state rather than one.
+
+
+ 
+
+ 
   
    
 
