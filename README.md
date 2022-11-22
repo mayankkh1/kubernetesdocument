@@ -318,7 +318,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 #### Step 11: Create manifest file for Horizontal Pod Autoscaling.
 
-- In this first we have to add resource limit to application pod. So, we need to add below lines in nodeapp.yaml file.
+- In this first we have to add resource limit to application pod enable metrics. So, we need to add below lines in nodeapp.yaml file.
 
   ```
   resources:
@@ -329,6 +329,10 @@ To deploy and manage clusters, we need to install kubectl, the official command 
       memory: "128Mi"
       cpu: "500m"
   ```
+ 
+- For enable metrics run below command 
+  ```minikube addons enable metrics```
+  
   
 - Now for HorizontalPodAutoscaling we have to create file with the name hpapod.yaml and put the file into kube folder 
 
@@ -358,8 +362,38 @@ To deploy and manage clusters, we need to install kubectl, the official command 
  
   ```kubectl apply -f hpapod.yaml```
   
-- 
+- Now run below command and check if target is greater than utilization then it will create more replicas or not 
   
+  ```kubectl get hpa```
+  
+#### Step 12: Create Health probes
+
+- For this we need to add below lines in nodeapp.yaml file.
+
+  ```
+   readinessProbe:
+     tcpSocket:
+       port: 3000
+     initialDelaySeconds: 5
+     periodSeconds: 10
+   livenessProbe:
+     tcpSocket:
+       port: 3000
+     initialDelaySeconds: 15
+     periodSeconds: 20
+  ```
+  
+- In this we are using TCP liveness probe,this liveness probe uses a TCP socket. With this configuration, the kubelet will attempt to open a socket to     your container on the specified port. If it can establish a connection, the container is considered healthy, if it can't it is considered a failure.
+
+- We are using both readiness and liveness probes in this liveness probe.
+
+- In our scenario, The kubelet will send the first readiness probe 5 seconds after the container starts. This will attempt to connect to the application   container on port 3000. If the probe succeeds, the Pod will be marked as ready. The kubelet will continue to run this check every 10 seconds.
+
+- In addition to the readiness probe, this configuration includes a liveness probe. The kubelet will run the first liveness probe 15 seconds after the     container starts. Similar to the readiness probe, this will attempt to connect to the application container on port 3000. If the liveness probe fails,   the container will be restarted.
+
+
+  
+
   
   
    
