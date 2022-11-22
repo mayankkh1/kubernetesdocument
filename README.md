@@ -136,7 +136,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
 #### Step 8: Now we have to make deployment files for application and database:
 
-- Create the application file for deployment as like below:
+- Create the application file for deployment as like below with the name nodeapp.yaml:
   
   ```
   apiVersion: apps/v1
@@ -165,7 +165,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
      
 - Now we need to create database file for deployment. In this we need to create PVC first then create the deployment file
   
-  Create the PersistentVolumeClaim as like below:
+  Create the PersistentVolumeClaim as like below with the name mongopvc.yaml:
   
   ```
   apiVersion: v1
@@ -179,7 +179,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
       requests:
         storage: 256Mi
   ```
-  Once PVC file create now create the deployment file as like below:
+  After the PVC file, Now create the deployment file as like below with the name mongo.yaml:
 
   ```
   apiVersion: apps/v1
@@ -211,15 +211,64 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
 - Once all files are created, Put the files in any folder(in my case I have uploaded in kube folder).
 
-- Now run the below command kubectl apply for checking the deployment files are working fine or not.
+- Now run the below command kubectl apply for creating the deployment pods.
 
   ```kubectl apply -f kube```
   
-- After that check the pods are visible or not after running the above command.
+- After that check the deployment pods are working fine or not with the below command.
 
   ```kubectl get pods```
               
-- Once you get the pods running then your deployments files are working fine.
+- Once you get the pods in running state then your deployments files are working fine.
+
+#### Step 9: Now we have to expose this nodejs app to outside this cluster.
+
+- For this we need to create a service manifest file for both pod database and nodejs.
+
+  Create the Database service file as like below with the name mongosvc.yaml:
+  
+  ```
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: mongo
+  spec:
+    selector:
+      app: mongo
+    ports:
+      - port: 27017
+        targetPort: 27017
+  ```
+  Create the App service file as like below with the name appservice.yaml:
+  
+  ```
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: nodeapp
+  spec:
+    selector:
+      app: nodemyapp01
+    ports:
+      - port: 8080
+        targetPort: 3000
+    type: NodePort
+  ```
+  
+- Put both the files in kube folder as like previous file and now we have to run again the below command for creating the service
+  
+  ```kubectl apply -f kube```
+  
+- After that check service is succesfully created or not using below command:
+
+  ```kubectl get svc```   
+  
+  
+  
+   
+
+
+
 
 
 
