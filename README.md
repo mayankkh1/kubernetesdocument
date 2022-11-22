@@ -81,7 +81,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
  
   ```sudo apt update``` 
   
-  ``` sudo apt-get install \
+  ```sudo apt-get install \
     ca-certificates \
     curl \
     gnupg \
