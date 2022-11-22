@@ -86,7 +86,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
     ca-certificates \
     curl \
     gnupg \
-    lsb-release```
+    lsb-release  ```
   
 - Add Docker’s official GPG key:    
   
