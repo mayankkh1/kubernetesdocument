@@ -112,9 +112,9 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ```sudo apt-get install docker-ce docker-ce-cli containerd.io```
   
-#### Step 7: Once docker is installed, we have to pull the code from github and create Docker file for build the image and push to dockerhub:
+#### Step 7: Once docker is installed, we have to clone the repository from github and create Docker file for build the image and push to dockerhub:
 
-- Once you have pull the code from github, Create the dockerfile as like below:
+- Once you have clone the repository from github, Create the dockerfile as like below:
   
   ```
   FROM node:12.0-slim
@@ -366,7 +366,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ```kubectl get hpa```
   
-#### Step 12: Create Health probes
+#### Step 12: Add Health probes
 
 - For this we need to add below lines in nodeapp.yaml file.
 
@@ -391,7 +391,25 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 - In addition to the readiness probe, this configuration includes a liveness probe. The kubelet will run the first liveness probe 15 seconds after the     container starts. Similar to the readiness probe, this will attempt to connect to the application container on port 3000. If the liveness probe fails,   the container will be restarted.
 
+- For the SSL minikube already install self-signed certificate so not required to install again.
 
+#### Step 13:  kustomization
+
+- For this we have to build a file in kube directories as like below with the name kustomization.yaml for including the yaml files in kustomization. 
+  
+  ```
+  apiVersion: kustomize.config.k8s.io/v1beta1
+  kind: Kustomization
+  resources:
+  - nodeapp.yaml
+  - nodeappingress.yaml
+  - mongo.yaml
+  - appservice.yaml
+  - hpapod.yaml
+  - mongopvc.yaml
+  - mongosvc.yaml
+
+  ```
   
 
   
