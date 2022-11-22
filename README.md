@@ -112,9 +112,9 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ```sudo apt-get install docker-ce docker-ce-cli containerd.io```
   
-#### Step 7: Once docker is installed, we have to pull the code from github and create Docker file for build the image:
+#### Step 7: Once docker is installed, we have to pull the code from github and create Docker file for build the image and push to dockerhub:
 
-- Once you have pull the code from github, Create the dockerfile as like below 
+- Once you have pull the code from github, Create the dockerfile as like below:
   
   ```
   FROM node:12.0-slim
@@ -123,6 +123,46 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   CMD [ "node", "index.js" ]
   
   ```
+
+- Now we have to build the image with below command:
+
+  ```docker build -t mak1993/nodeapp01:latest . ```
+  
+- Once image is build now we need to push to dockerhub.
+
+  ```docker push mak1993/nodeapp01:latest```
+ 
+  Notes: For push the docker image first we need to log in to Docker Hub from our command-line interface then run above command.
+  
+#### Step 8: Now we have to make deployment files for application and database:
+
+- Create the application file for deployment as like below:
+  
+  ```
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: nodeapp
+  spec:
+    selector:
+      matchLabels:
+        app: nodemyapp01
+  template:
+    metadata:
+      labels:
+        app: nodemyapp01
+    spec:
+      containers:
+        - name:  nodeapp
+          image: mak1993/nodeapp01:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URL
+              value: mongodb://mongo:27017/dev
+          imagePullPolicy: Always
+     ```     
+          
 
   
 
