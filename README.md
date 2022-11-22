@@ -111,9 +111,9 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 - Once you have pull the code from github, Create the dockerfile as like below 
   
   ```FROM node:12.0-slim
-     COPY . .
-     RUN npm install
-     CMD [ "node", "index.js" ]```
+  COPY . .
+  RUN npm install
+  CMD [ "node", "index.js" ]```
 
   
 
