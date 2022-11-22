@@ -239,7 +239,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
       - port: 27017
         targetPort: 27017
   ```
-  Create the App service file as like below with the name appservice.yaml:
+  Create the App service file with type NodePort as like below with the name appservice.yaml:
   
   ```
   apiVersion: v1
@@ -263,6 +263,11 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
   ```kubectl get svc```   
   
+- Once done we can check the nodeport url is working fine or not as like below:
+
+  http://IP:Port/
+   
+
   
   
    
