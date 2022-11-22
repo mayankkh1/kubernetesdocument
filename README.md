@@ -97,9 +97,12 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
 - Use the following command to set up the repository:
 
-  ```echo \
+  ```
+  echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null```
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
+  ```
   
 - For install the Docker Engine update the apt package index again:
  
@@ -113,10 +116,13 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 - Once you have pull the code from github, Create the dockerfile as like below 
   
-  ```FROM node:12.0-slim
+  ```
+  FROM node:12.0-slim
   COPY . .
   RUN npm install
-  CMD [ "node", "index.js" ]```
+  CMD [ "node", "index.js" ]
+  
+  ```
 
   
 
