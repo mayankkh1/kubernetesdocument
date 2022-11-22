@@ -263,9 +263,49 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
   ```kubectl get svc```   
   
-- Once done we can check the nodeport url is working fine or not as like below:
+- Now we can check the nodeport url is working fine or not. Once Url is working fine we can move forward.
 
-  http://IP:Port/
+#### Step 10: Create Ingress Controller and ingress file for pointing to domain
+
+- To enable the NGINX Ingress controller, run the following command in minikube:
+  
+  ```minikube addons enable ingress```
+  
+- Verify that the NGINX Ingress controller is running with the below comman:
+
+  ```kubectl get pods -n ingress-nginx```
+  
+- If you want to add controller manually as like in k3s, run below command:
+  
+  ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/baremetal/deploy.yaml```
+  
+- Now we have to create the ingress file for domain point to our deployment app
+  
+  ```
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: nodeappingress
+  spec: 
+    ingressClassName: nginx
+    rules:
+    - host: "mywebapp.org"
+      http:
+        paths:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: nodeapp
+              port: 
+                number: 8080
+ 
+  ```
+- 
+
+
+
+
    
 
   
