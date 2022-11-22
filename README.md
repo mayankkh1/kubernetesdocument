@@ -279,7 +279,9 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/baremetal/deploy.yaml```
   
-- Now we have to create the ingress file for domain point to our deployment app
+- Now we have to create the ingress file for domain on 80 or 443 port points to our deployment application
+
+  Create the ingress file as like below with the name nodeappingress.yaml and put the file into kube folder 
   
   ```
   apiVersion: networking.k8s.io/v1
@@ -301,13 +303,63 @@ To deploy and manage clusters, we need to install kubectl, the official command 
                 number: 8080
  
   ```
+  
+- We have to run the below command for creating the ingress resource
+  
+  ```kubectl apply -f nodeappingress.yaml ```
+
+- Now check ingress resource is created or not, run below command and check address is assigned or not.
+ 
+  ```kubectl get ingress```
+
+  ![image](https://user-images.githubusercontent.com/42695637/203298947-fceef6f9-b7de-4566-bcae-0f69902f3aa7.png)
+
+- Now run this "mywebapp.org" URL on browser, You got your website content in browser after hit the URL.
+
+#### Step 11: Create manifest file for Horizontal Pod Autoscaling.
+
+- In this first we have to add resource limit to application pod. So, we need to add below lines in nodeapp.yaml file.
+
+  ```
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+  ```
+  
+- Now for HorizontalPodAutoscaling we have to create file with the name hpapod.yaml and put the file into kube folder 
+
+  ```
+  apiVersion: autoscaling/v2
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: nodeapphorizontal
+  spec:
+    maxReplicas: 4
+    metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 1
+          type: Utilization
+      type: Resource
+    minReplicas: 1
+    scaleTargetRef:
+      apiVersion: apps/v1
+      kind: Deployment
+      name: nodeapp 
+     
+  ```
+  
+- We have to run the below command for creating the HorizontalPodAutoscaler
+ 
+  ```kubectl apply -f hpapod.yaml```
+  
 - 
-
-
-
-
-   
-
+  
   
   
    
