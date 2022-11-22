@@ -448,8 +448,86 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 #### Step 14: Install Jenkins:
 
-- 
- 
+- In this we need to create the deployment pod for jenkins and create PV for storing the data as like below file with the name jenkins.yaml
+
+  ```
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata: 
+    name: jenkin-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 260Mi
+  ---
+
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: jenkins
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: jenkins
+    template:
+      metadata:
+        labels:
+          app: jenkins
+      spec:
+        containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          ports:
+            - name: http-port
+              containerPort: 8080
+            - name: jnlp-port
+              containerPort: 50000
+          volumeMounts:
+            - name: jenkins-vol
+              mountPath: /var/jenkins_home
+        volumes:
+          - name: jenkins-vol
+            persistentVolumeClaim:
+              claimName: jenkin-pvc
+  ```            
+
+- Now we need to create two services for jenkins as like below:
+  
+  ```
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: jenkins
+  spec:
+    type: NodePort
+    ports:
+      - port: 8080
+        targetPort: 8080
+        nodePort: 30000
+    selector:
+      app: jenkins
+
+  ---
+
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: jenkins-jnlp
+  spec:
+    type: ClusterIP
+    ports:
+      - port: 50000
+        targetPort: 50000
+    selector:
+      app: jenkins
+   ```
+- Jenkins runs on Tomcat, which uses port 8080 as the default. -p 5000:5000 required to attach slave servers; port 50000 is used to communicate between     master and slaves that's why we have created two services.
+
+-   
+
 
  
   
