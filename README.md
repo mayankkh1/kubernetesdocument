@@ -74,4 +74,47 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 - Once we have set up all the required software, we are ready to start Minikube with the below command: 
 
   ```minikube start```
+  
+#### Step 6: Now we have to install docker for build the nodejs image
+
+- Update the apt package index and install packages to allow apt to use a repository over HTTPS: 
+ 
+  ```sudo apt update``` 
+  
+  ``` sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release```
+  
+- Add Docker’s official GPG key:    
+  
+  ```sudo mkdir -p /etc/apt/keyrings```
+  ```curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg```
+  
+- Use the following command to set up the repository:
+
+  ```echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null```
+  
+- For install the Docker Engine update the apt package index again:
+ 
+  ```sudo apt-get update```
+  
+- Now install docker with below command:
+  
+  ```sudo apt-get install docker-ce docker-ce-cli containerd.io```
+  
+#### Step 7: Once docker is installed, we have to pull the code from github and create Docker file for build the image:
+
+- Once you have pull the code from github, Create the dockerfile as like below 
+  
+  ```FROM node:12.0-slim
+     COPY . .
+     RUN npm install
+     CMD [ "node", "index.js" ]```
+
+  
+
 
