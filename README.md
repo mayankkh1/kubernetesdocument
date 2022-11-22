@@ -537,11 +537,29 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
   MinikubeIP:30000
   
-- After that install Jenkins in b  
+- Now we have to setup the jenkins 
+
+- To set up your installation, visit Jenkins on 30000 port, using your server domain name or IP address: http://your_server_ip_or_domain:30000.
   
+  You should receive the Unlock Jenkins screen, which displays the location of the initial password:
+  
+  ![image](https://user-images.githubusercontent.com/42695637/190149938-d9a9b447-312b-40a3-bc1a-efdbdf0534c0.png)
+  
+- For this you have go inside the minikube machine with ssh and go inside the jenkin container with docker command, After that use cat command to display   the password:
+  
+  ```sudo cat /var/lib/jenkins/secrets/initialAdminPassword```
+  
+- Copy the 32-character alphanumeric password from the jenkin container and paste it into the Administrator password field, then click Continue.
 
+- The next screen presents the option of installing suggested plugins or selecting specific plugins:
+  
+  ![image](https://user-images.githubusercontent.com/42695637/190150451-8d2339d0-be7b-43af-b367-b575ff553058.png)
+  
+  We’ll click the Install suggested plugins option if we want otherwise cancel the same and add plugins according to requirement like ssh for               authentication of manage nodes, which will immediately begin the installation process.  
 
- 
+- When the installation is complete, you’ll be prompted to set up the first administrative user. It’s possible to skip this step and continue as admin     using the initial password we used admin password only
+
+  
   
    
 
