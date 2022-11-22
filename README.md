@@ -446,7 +446,9 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
 - Once command successfully run you got the 2 application pod in running state rather than one.
 
+#### Step 14: Install Jenkins:
 
+- 
  
 
  
