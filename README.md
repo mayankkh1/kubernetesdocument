@@ -707,11 +707,25 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 - Url is like this ```https://449a-2405-201-402e-d811-e162-bf5e-226c-9d0e.in.ngrok.io```
 
-- Now take this URl and login into Github
+- If you want to run the ngrok in background, you need to run the below command
 
+  ```ngrok http 192.168.59.102:30000 --log=stdout > ngrok.log &```
 
+  Now you got the url in ngrok.log file instead of foreground.
+  
+  Note: Previously we are using foreground command, when we press ctrl+C, the url is no longer available. So we can use the background
+  command so that it will run at background.
 
-
+- Now copy the ngrok URl and login into Github and add the Webhook URL to our repository, let’s go ahead and add it.
+  
+  Go to the settings of your Github repository and go to the Webhooks section. Enter the payload URL is https://449a-2405-201-402e-d811-e162-bf5e-226c-9d0e.in.ngrok.io
+  
+  ![image](https://user-images.githubusercontent.com/42695637/203503571-e62aaf80-63ed-416a-9f34-3586d187d36a.png)
+  
+- 
+  
+-    
+  
 
 
 
