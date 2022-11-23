@@ -437,7 +437,8 @@ To deploy and manage clusters, we need to install kubectl, the official command 
     name: nodeapp
   spec:
     replicas: 2
-    
+  ```
+  
   Now it will create the 2 application pod previously it creates 1.
   
 - For run the kustomization we have to run the below command outside the kube directory as like below:
