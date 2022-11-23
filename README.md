@@ -738,5 +738,5 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/baremetal/deploy.yaml```
   
-- All the steps are same in k3s except metrics and ingress,metrics is installed automatically we don't need to enable or ingress we have to install with   above command.
+- All the steps are same in k3s except metrics and ingress,metrics is installed automatically we don't need to enable or ingress we have to install with   above command. 
       
