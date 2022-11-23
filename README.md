@@ -722,9 +722,8 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
   ![image](https://user-images.githubusercontent.com/42695637/203503571-e62aaf80-63ed-416a-9f34-3586d187d36a.png)
   
-- 
-  
--    
+- Once added, Now try to push changes on Github and check pipeline is working fine automatically or not. Once successfully completed it will reflect the   new content on website
+      
   
 
 
