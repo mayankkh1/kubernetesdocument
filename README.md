@@ -687,7 +687,7 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   mak1993/nodeapp01:${BUILD_NUMBER}
   ```
 
-#### Step 15: Add Github webhook URL
+#### Step 15: Add webhook URL in Github
   
    
 
