@@ -724,12 +724,18 @@ To deploy and manage clusters, we need to install kubectl, the official command 
   
 - Once added, Now try to push changes on Github and check pipeline is working fine automatically or not. Once successfully completed it will reflect the   new content on website
       
+#### Step 16: K3s in EC2 instance as like minikube
+
+- Installation command for k3s is:
   
-
-
-
-          
-
+  ```curl -sfL https://get.k3s.io | sh -``` 
   
+  Check for Ready node, takes ~30 seconds 
+  ```k3s kubectl get node``` 
 
-
+- It's work like as minikube but for ingress controller in k3s we can not enable directly. We have to install with below command:
+  
+  ```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/baremetal/deploy.yaml```
+  
+- All the steps are same in k3s except metrics and ingress,metrics is installed automatically we don't need to enable or ingress we have to install with   above command.
+      
