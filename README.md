@@ -689,8 +689,25 @@ To deploy and manage clusters, we need to install kubectl, the official command 
 
 #### Step 15: Add webhook URL in Github
   
-   
+- As we have working locally, so we are not able to add the URL,if we are running Jenkins on localhost then writing https://localhost:30000/github-webhook/ will not work because Webhooks can only work when they are exposed to the internet   
 
+- For this we have to use ngrok, ngrok makes it easy to set up a secure “relay” endpoint (HTTPS) that points at your localhost (HTTP) so you can receive   the webhooks locally without having to deploy your project to the Internet.Traffic is relayed to the ngrok process that’s running on your machine, then   onto the local address that you specified when starting the ngrok process.
+
+- For Install ngrok via Apt with below command:
+ 
+  ``` curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok```
+
+- Now run the below command for getting the public URL:
+
+  ```ngrok http 192.168.59.102:30000```
+   
+- Once command successfully run it will provide the URL as like below image.
+  
+  ![image](https://user-images.githubusercontent.com/42695637/203493329-7ea0bb17-144d-4071-8e3b-0428d3b88294.png)
+
+- Url is like this ```https://449a-2405-201-402e-d811-e162-bf5e-226c-9d0e.in.ngrok.io```
+
+- Now take this URl and login into Github
 
 
 
